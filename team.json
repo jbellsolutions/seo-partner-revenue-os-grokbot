@@ -1,0 +1,236 @@
+{
+ "_doc": "The Revenue OS team: one lead and one Grok bot for each of the nine functions. Every routine hands one job (jobs/<job>.md) to the CLI named by engine through tools/job.py. tools/team.py, install.py, update.py and check.py read this. Cron is UTC.",
+ "version": "1.0.0",
+ "name": "SEO Partner Revenue OS",
+ "workspace": "/workspace/seo-partner-revenue-os",
+ "link": "https://github.com/jbellsolutions/seo-partner-revenue-os-grokbot/releases/latest/download/seo-partner-revenue-os.zip",
+ "secrets": "team.env",
+ "skills": [
+  "claude-code-cli"
+ ],
+ "folders": [
+  "context",
+  "daily",
+  "log/jobs",
+  "state",
+  "content/drafts",
+  "vault/Daily",
+  "vault/People",
+  "requests/owner",
+  "requests/sent"
+ ],
+ "private_folders": [
+  "data",
+  "data/contacts",
+  "data/inbox",
+  "data/calls",
+  "data/out",
+  ".secrets"
+ ],
+ "checks": [
+  [
+   "self-test",
+   "tools/selftest.py"
+  ]
+ ],
+ "first_job": "plan",
+ "update": {},
+ "agents": [
+  {
+   "role": "lead",
+   "bot": "SEO Partner Revenue OS",
+   "kind": "lead",
+   "engine": "claude",
+   "does": "The one the owner talks to. Plans each agent's day, keeps the owner's one queue, reports the count",
+   "accounts": [
+    "Slack, if the owner uses it"
+   ],
+   "routines": [
+    [
+     "Plan",
+     "50 11 * * 1-5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run plan"
+    ],
+    [
+     "Report",
+     "30 23 * * *",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run report. Then post /workspace/seo-partner-revenue-os/daily/<date>/report.md, as it is, to the owner in this chat, and to Slack if it is connected"
+    ]
+   ]
+  },
+  {
+   "role": "dream-100",
+   "bot": "SEO Dream 100",
+   "kind": "function",
+   "engine": "claude",
+   "does": "The hundred people where one yes changes everything: a dossier and one hand-written message each, by email and on socials",
+   "accounts": [
+    "The owner's mailbox",
+    "LinkedIn"
+   ],
+   "routines": [
+    [
+     "Dream 100",
+     "10 13 * * 1-5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run dream-100. Then do the send steps in your memory"
+    ]
+   ]
+  },
+  {
+   "role": "dream-500",
+   "bot": "SEO Dream 500",
+   "kind": "function",
+   "engine": "claude",
+   "does": "The wider five hundred, in small waves, each with a true first line",
+   "accounts": [
+    "A mailbox",
+    "LinkedIn"
+   ],
+   "routines": [
+    [
+     "Dream 500",
+     "40 13 * * 1-5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run dream-500. Then do the send steps in your memory"
+    ]
+   ]
+  },
+  {
+   "role": "partners",
+   "bot": "SEO Partners",
+   "kind": "function",
+   "engine": "claude",
+   "does": "Partners, collaborators and influencers: people who already have the buyers' attention and could promote",
+   "accounts": [
+    "A mailbox"
+   ],
+   "routines": [
+    [
+     "Partners",
+     "10 14 * * 1-5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run partners. Then do the send steps in your memory"
+    ]
+   ]
+  },
+  {
+   "role": "cold-email",
+   "bot": "SEO Cold Leads",
+   "kind": "function",
+   "engine": "claude",
+   "does": "The lists every agent orders, and cold email to the rest, ready for the sending tool",
+   "accounts": [
+    "The sending tool, if the owner has one"
+   ],
+   "routines": [
+    [
+     "Lists",
+     "10 12 * * 1-5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run list"
+    ],
+    [
+     "Cold leads",
+     "40 14 * * 1-5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run cold-email. Then do the send steps in your memory"
+    ]
+   ]
+  },
+  {
+   "role": "lead-radar",
+   "bot": "SEO Lead Radar",
+   "kind": "function",
+   "engine": "codex",
+   "does": "People already asking in public for what the owner offers. Reads and scores; hands them on",
+   "accounts": [
+    "Reddit, LinkedIn and community sign-ins the owner allows"
+   ],
+   "routines": [
+    [
+     "Lead Radar",
+     "20 15 * * *",
+     "First save the new posts your sign-ins can see in the communities named in /workspace/seo-partner-revenue-os/context/owner.md to /workspace/seo-partner-revenue-os/data/inbox/radar-<date>.txt. Then run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run lead-radar"
+    ]
+   ]
+  },
+  {
+   "role": "content",
+   "bot": "SEO Content",
+   "kind": "function",
+   "engine": "claude",
+   "does": "Posts and videos worth sharing, in the owner's voice",
+   "accounts": [
+    "LinkedIn",
+    "A video tool, if the owner has one"
+   ],
+   "routines": [
+    [
+     "Content",
+     "50 15 * * 1,3,5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run content"
+    ]
+   ]
+  },
+  {
+   "role": "speaker",
+   "bot": "SEO SpeakerAgent",
+   "kind": "function",
+   "engine": "codex",
+   "does": "Podcasts, events and stages: shows scored, pitches with an angle, follow-up",
+   "accounts": [
+    "The owner's mailbox"
+   ],
+   "routines": [
+    [
+     "SpeakerAgent",
+     "20 16 * * 2,4",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run speaker. Then do the send steps in your memory"
+    ]
+   ]
+  },
+  {
+   "role": "aeo-seo",
+   "bot": "SEO AEO and SEO",
+   "kind": "function",
+   "engine": "codex",
+   "does": "Found in search and named by AI answers: the questions buyers ask, and a page that answers each",
+   "accounts": [
+    "The website, if the owner wants it edited"
+   ],
+   "routines": [
+    [
+     "AEO and SEO",
+     "50 16 * * 2,5",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run aeo-seo"
+    ]
+   ]
+  },
+  {
+   "role": "sales-crm",
+   "bot": "SEO Sales",
+   "kind": "function",
+   "engine": "codex",
+   "does": "Every conversation after a reply: answers, calls, invitations, follow-up, and the people list as the CRM",
+   "accounts": [
+    "Every mailbox the team sends from",
+    "The calendar",
+    "LinkedIn",
+    "The CRM, if the owner has one"
+   ],
+   "routines": [
+    [
+     "Replies",
+     "*/10 14-21 * * 1-5",
+     "First save each new reply from Instantly (the INSTANTLY_API_KEY secret, or the Unibox in your own browser if the key cannot read reply text), the OutFlo inbox and any other signed-in mailbox to /workspace/seo-partner-revenue-os/data/inbox/<date>/, one text file per message with FROM, SUBJECT, SOURCE and RECEIVED (UTC) at the top. Skip a reply younger than five minutes; the next run takes it. Then run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run replies. Then do the send steps in your memory"
+    ],
+    [
+     "Calls",
+     "20 12 * * 1-5",
+     "First save today's and tomorrow's calls from the signed-in calendar, and any new call notes or transcript, to /workspace/seo-partner-revenue-os/data/calls/<date>.md. Then run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run calls. Then do the send steps in your memory"
+    ],
+    [
+     "Members",
+     "10 17 * * 1",
+     "Run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run members. Then do the send steps in your memory"
+    ]
+   ]
+  }
+ ]
+}

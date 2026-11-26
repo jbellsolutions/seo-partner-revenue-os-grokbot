@@ -1,0 +1,133 @@
+{
+ "_doc": "One business's speaker settings. Every value is a default to change. Keys, tokens, addresses, phone numbers and contact lists stay out of this file: it is in a repository.",
+ "campaign": "example",
+ "speaker": {
+  "name": "the speaker's name as it should appear in a pitch",
+  "title": "what they do, in one line",
+  "serves": "who the speaker helps: the kind of person or business",
+  "language": "English",
+  "topics": [
+   {
+    "topic": "the first talk topic, in the words a host would use",
+    "audience_problem": "the problem this topic solves for a listener, in plain words",
+    "approved_claims": [
+     "a claim the speaker has approved, used word for word",
+     "a second one"
+    ]
+   }
+  ],
+  "proof": [
+   "a result, an episode or a piece of work the speaker has said may be named"
+  ],
+  "voice": [
+   "short sentences",
+   "plain words",
+   "no hype",
+   "openings and closings to avoid"
+  ]
+ },
+ "booking_is_for": "what a booking is for: leads, authority, a recording to cut into content",
+ "leave_outs": [
+  "show types the owner has ruled out"
+ ],
+ "lanes": {
+  "_doc": "podcasts covers audio shows and interview shows published as a podcast feed. stages (conferences, summits, seminars, paid speaking) is in the source this was adapted from and is off here until the owner turns it on.",
+  "podcasts": {
+   "on": true
+  },
+  "stages": {
+   "on": false
+  }
+ },
+ "sources": {
+  "_doc": "Where shows are found. apple-rss is free and needs no key: Apple's public podcast search, then each show's own feed. listennotes is Listen Notes' Podcast API: it needs LISTENNOTES_API_KEY in the environment or .env.local and every request counts against the account's plan. terms is the list of plain search words (a short phrase finds more than a sentence); a long list is walked terms_per_run a day. web-search is the bot's own search and browser, in its routine. hosted-list is a SpeakerAgent account's list over its API, for a business that has one. collab-handoffs are shows another agent hands over in requests/speaker/.",
+  "apple-rss": {
+   "on": true,
+   "terms": [],
+   "terms_per_run": 12,
+   "per_term": 200
+  },
+  "listennotes": {
+   "_doc": "10 shows a request. results_per_term is how deep one search word is read: 30 is the FREE plan's limit, 300 the PRO plan's. interviews_only and the feed address, email and Listen Score in a result are PRO features; on FREE set interviews_only false, and the feed address comes from Apple's free lookup. calls_per_day stops the day's requests; 0 is no stop. terms falls back to apple-rss's.",
+   "on": false,
+   "terms": [],
+   "terms_per_run": 10,
+   "results_per_term": 100,
+   "interviews_only": true,
+   "language": "English",
+   "calls_per_day": 150
+  },
+  "web-search": {
+   "on": true
+  },
+  "hosted-list": {
+   "on": false
+  },
+  "collab-handoffs": {
+   "on": true
+  }
+ },
+ "reject_below": 20,
+ "quiet_days": 90,
+ "feeds_per_run": 1200,
+ "engine_workers": 4,
+ "_run_doc": "feeds_per_run is how many listed shows have their own feed read in one find. engine_workers is how many engine calls (scoring chunks, drafts) run at once.",
+ "pace": {
+  "_doc": "The day's numbers. booked_per_day is the owner's of 2026-11-17 (1 to 2 a day). pitches_per_day is the owner's of 2026-11-26: \"100+ maybe 200 podcasts a day prospected with custom emails sent\". open_per_day is how many of the best-scoring shows with no published address the bot opens to look for a booking page or guest form.",
+  "booked_per_day": [
+   1,
+   2
+  ],
+  "pitches_per_day": [
+   100,
+   200
+  ],
+  "open_per_day": 60
+ },
+ "email_lane": {
+  "_doc": "The lane that makes 100 to 200 a day possible: code accepts a show without the bot opening it, when the show publishes an address (its own feed first, its Listen Notes listing second), that address's domain has a mail server, the address is not already on a case or in speaker/contacted.txt, and guest interviews are shown (Listen Notes' flag, or the engine's guest_format at guest_format_min or over). triage is which of the documented scorer's bands the lane takes (GREEN is 65 and over, YELLOW 35 to 64, RED under 35). Switch it off and every show waits for the bot.",
+  "on": true,
+  "guest_format_min": 8,
+  "triage": [
+   "GREEN",
+   "YELLOW"
+  ]
+ },
+ "site_lane": {
+  "_doc": "For a show in the email lane's score bands whose feed publishes no address: read its own site (the home page, then up to three guest, pitch, contact or about pages) for an address the site shows and for a guest or booking page. A plain read first, which is free; Firecrawl only when the plain read fails and FIRECRAWL_API_KEY is in the environment or .env.local (one credit a page). An address goes to the email lane; a guest page is noted on the case for the bot.",
+  "on": true,
+  "per_run": 300
+ },
+ "holds_reviewed_per_run": 10,
+ "pitch": {
+  "words": "80 to 120",
+  "template_file": "",
+  "details_file": "speaker/pitch-details.json",
+  "_details_doc": "The private file the guest-form answers come from (which email, whether a phone may be given, the bio, how-did-you-hear). It lives on the bot's computer, never in the pack or this file."
+ },
+ "route_order": [
+  "an open booking page with no fee",
+  "the show's guest form",
+  "the host's or the show's published address"
+ ],
+ "follow_up_days": [
+  4,
+  10
+ ],
+ "attribution": {
+  "link": "the page a listener is sent to, with ?src=podcast-<show> added",
+  "crm_source_tag": "podcast:<show>"
+ },
+ "hand_off": {
+  "sales-crm": "every host who replies, every booked show, and a host who is also a possible buyer",
+  "content": "every recorded or published episode",
+  "partners": "a host who runs a partner programme or has a large audience of the speaker's buyers"
+ },
+ "routines": {
+  "research": "daily, in several slots: find, score, open and qualify shows until the day's pitches are covered; re-review held shows",
+  "pitches": "daily: draft a pitch for each accepted show",
+  "follow-up": "daily: follow-ups that are due, replies, bookings",
+  "week": "weekly: counts, and leads per appearance from the CRM source tag"
+ },
+ "_reject_doc": "reject_below is the documented SpeakerAgent line: a show scoring under 20 is rejected."
+}
