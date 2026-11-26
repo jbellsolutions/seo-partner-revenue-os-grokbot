@@ -1,6 +1,6 @@
 {
  "_doc": "The Revenue OS team: one lead and one Grok bot for each of the nine functions. Every routine hands one job (jobs/<job>.md) to the CLI named by engine through tools/job.py. tools/team.py, install.py, update.py and check.py read this. Cron is UTC.",
- "version": "1.0.0",
+ "version": "1.1.0",
  "name": "SEO Partner Revenue OS",
  "workspace": "/workspace/seo-partner-revenue-os",
  "link": "https://github.com/jbellsolutions/seo-partner-revenue-os-grokbot/releases/latest/download/seo-partner-revenue-os.zip",
@@ -217,8 +217,8 @@
    "routines": [
     [
      "Replies",
-     "*/10 14-21 * * 1-5",
-     "First save each new reply from Instantly (the INSTANTLY_API_KEY secret, or the Unibox in your own browser if the key cannot read reply text), the OutFlo inbox and any other signed-in mailbox to /workspace/seo-partner-revenue-os/data/inbox/<date>/, one text file per message with FROM, SUBJECT, SOURCE and RECEIVED (UTC) at the top. Skip a reply younger than five minutes; the next run takes it. Then run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run replies. Then do the send steps in your memory"
+     "Webhook (event routine, no schedule). Instantly posts here on every reply_received. Write the webhook URL Grok gives you to {{WS}}/requests/owner/instantly-webhook.md for the owner",
+     "A reply came in. Read the webhook payload for the lead's email and the campaign, then pull every reply received since state/replies-last.txt from Instantly with the INSTANTLY_API_KEY secret (so a missed webhook is caught by the next one), plus any new message in the OutFlo inbox, and save each to /workspace/seo-partner-revenue-os/data/inbox/<date>/, one text file per message with FROM, SUBJECT, SOURCE and RECEIVED (UTC) at the top. Write the newest RECEIVED to state/replies-last.txt. Then run python3 /workspace/seo-partner-revenue-os/repo/tools/job.py run replies. Then do the send steps in your memory"
     ],
     [
      "Calls",

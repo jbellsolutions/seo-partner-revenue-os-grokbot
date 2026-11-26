@@ -2,7 +2,7 @@
 
 A Revenue OS team of ten Grok bots: a lead, and one bot for each of the nine functions. The team finds agency and web design owners whose clients need local SEO, makes them referral partners on a monthly commission, answers every reply within minutes, and books the call on the owner's calendar.
 
-**Install or update:** one line each, in [INSTALL.md](INSTALL.md). Version 1.0.0. The pack holds no names, prices or lists: the team takes those from you.
+**Install or update:** one line each, in [INSTALL.md](INSTALL.md). Version 1.1.0. The pack holds no names, prices or lists: the team takes those from you.
 
 ## The team
 

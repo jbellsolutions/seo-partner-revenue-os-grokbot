@@ -1,6 +1,6 @@
 # Job: replies
 
-Every reply gets an answer within minutes on weekdays, in draft until the owner switches the type to auto, and one step forward.
+Instantly's webhook starts this on every reply. Every reply gets an answer straight away, in draft until the owner switches the type to auto, and one step forward.
 
 ## Before anything
 If `context/owner.md` has `other_reply_agents:` with anything in it other than `none`, stop: write one line to `daily/<today>/replies.md` ("another system answers replies; waiting for the owner to pick one") and do nothing else. Two systems never answer the same person.

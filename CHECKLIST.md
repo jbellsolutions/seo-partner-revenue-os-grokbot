@@ -14,7 +14,8 @@ Everything only the owner can do, in one list. The team works on drafts without 
 | 8 | [ ] People to leave alone | Send your opt-outs and anyone the team should never write to | Nobody gets a message they shouldn't |
 | 9 | [ ] How people pay | Your own checkout or invoice. The team never takes payment; put the line in owner.md `payment` | Joining |
 | 10 | [ ] Where it listens and speaks | The communities Lead Radar may read, your topics for shows, your site for AEO: lines in owner.md | Lead Radar, SpeakerAgent, AEO and SEO |
-| 11 | [ ] Instantly | In Instantly: Settings, Integrations, API keys. Make a key named "Grok reply desk" (campaigns read, emails read and reply, leads update) and give it at the hidden prompt as `INSTANTLY_API_KEY`, never in chat | Replies answered within minutes |
+| 11 | [ ] Instantly | In Instantly: Settings, Integrations, API keys. Make a key named "Grok reply desk" (campaigns read, emails read and reply, leads update) and give it at the hidden prompt as `INSTANTLY_API_KEY`, never in chat | Sales reading your replies |
+| 11b | [ ] The Instantly webhook | Open `requests/owner/instantly-webhook.md` for the URL the Sales bot got. In Instantly: Settings, Integrations, Webhooks, add a webhook for the event "Reply received", all campaigns, pointing at that URL. Then reply to one of your own test emails and check Sales drafted an answer | Every reply answered the moment it lands, with no checking on a timer |
 | 12 | [ ] One system answers replies | If other agents already answer your replies, pick one. Until owner.md says `other_reply_agents: none`, Sales drafts nothing | No one gets two answers |
 | 13 | [ ] The credibility message | Check every line marked CONFIRM in owner.md: your years, your awards' exact wording, any result you want named | The first answer to every reply |
 
